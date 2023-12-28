@@ -16,8 +16,8 @@ namespace AdaTech.ListaLP.ExerciciosLibrary
 
             if (resultado == -1)
             {
-                Console.WriteLine("O número informado não possui uma raiz quadrada exata. A raiz aproximada é: " +
-                                  $"{CalcularRaizAproximada(numero):F4}");
+                Console.WriteLine("O número informado não possui uma raiz quadrada exata. Aguarde um pouco para o cálculo da raiz aproximada.");
+                Console.WriteLine($"A raiz aproximada é: {CalcularRaizAproximada(numero):F4}");
             }
             else
             {
@@ -31,18 +31,25 @@ namespace AdaTech.ListaLP.ExerciciosLibrary
             {
                 return numero;
             }
-            else
+            else if (numero == 4) 
+            {
+                return 2;
+
+            } else 
             {
                 double valor = -1;
-                for (double i = 2; i <= numero / 2; i++)
+                for (double i = 3; i <= numero / 3; i++)
                 {
                     if (i * i == numero)
                     {
                         valor = i;
                         break;
+                    } else if (i * i > numero)
+                    {
+                        valor = -1;
+                        break;
                     }
                 }
-
                 return valor;
             }
         }
@@ -50,9 +57,10 @@ namespace AdaTech.ListaLP.ExerciciosLibrary
         private static double CalcularRaizAproximada(double numero)
         {
             double estimativa = numero / 2;
-            double erro = 1e-10;
+            double erro = 1e-15;
 
-            while (Math.Abs(estimativa * estimativa - numero) > erro * estimativa)
+            while ((estimativa * estimativa - numero) > 0 && (estimativa * estimativa - numero) > (erro * estimativa) ||
+                (estimativa * estimativa - numero) < 0 && (estimativa * estimativa - numero) > (erro * estimativa) *-1)
             {
                 estimativa = 0.5 * (estimativa + numero / estimativa);
             }
